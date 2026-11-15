@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🗺️ Borang Pentaksiran — Misi Penjelajah Koordinat</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@600;700;800&display=swap');
+:root{
+  --navy:#173b61;--blue:#3f78a8;--sky:#dff4fa;--cream:#fff9e8;
+  --paper:#fffdf6;--gold:#f0b84f;--red:#c84d4f;--green:#688c57;
+  --ink:#30465b;--muted:#6d7d89;--line:#d9e1df;--shadow:0 12px 30px #24435a22
+}
+*{box-sizing:border-box}body{margin:0;font-family:Nunito,Arial,sans-serif;color:var(--ink);
+background:linear-gradient(#cdeff7,#effaff);min-height:100vh}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+.shell{max-width:1180px;margin:auto;padding:18px}
+.frame{background:var(--paper);border:6px solid #204d73;border-radius:30px;overflow:hidden;box-shadow:0 16px 45px #23465a33}
+.top{position:relative;padding:28px 34px 30px;background:
+linear-gradient(180deg,#8ed4eb 0%,#dff5f7 100%);overflow:hidden}
+.top:before{content:"";position:absolute;left:0;right:0;bottom:0;height:70px;
+background:repeating-linear-gradient(165deg,#6fae9c 0 16px,#85c3a9 16px 30px);opacity:.45}
+.title-wrap{position:relative;max-width:760px;margin:auto;text-align:center}
+.title{display:inline-block;background:#fff3cf;border:5px solid #e3b85d;border-radius:22px;
+padding:12px 30px;color:#173b61;font-family:'Baloo 2';font-size:clamp(28px,5vw,48px);
+font-weight:800;box-shadow:0 6px 0 #b78336;line-height:1}
+.subtitle{margin:16px 0 0;font-weight:800;color:#214a6b;font-size:15px}
+.badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:12px}
+.badge{background:#fff;border:2px solid #8bb5c5;border-radius:999px;padding:7px 12px;font-size:13px;font-weight:900}
+.nav{display:flex;gap:8px;padding:12px 16px;background:#173b61;overflow:auto}
+.nav button{border:0;background:#315d82;color:#fff;border-radius:999px;padding:10px 17px;font-weight:900;white-space:nowrap}
+.nav button.active{background:#f0b84f;color:#173b61}
+.page{display:none;padding:24px;background:linear-gradient(135deg,#f7fbf8,#fff9e8)}
+.page.active{display:block}
+.card{background:#fff;border:2px solid var(--line);border-radius:22px;padding:20px;box-shadow:var(--shadow);margin-bottom:18px}
+.card h2{font-family:'Baloo 2';font-size:29px;margin:0 0 8px;color:var(--navy)}
+.card h3{margin:0 0 8px;color:var(--navy)}
+.intro{display:grid;grid-template-columns:1.3fr .7fr;gap:18px}
+@media(max-width:760px){.intro{grid-template-columns:1fr}}
+.parchment{background:#fff4d3;border:3px dashed #d5aa58;border-radius:18px;padding:18px}
+.parchment h3{color:#8a5a20}
+.meta{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:760px){.meta{grid-template-columns:1fr}}
+.field label{display:block;font-weight:900;font-size:13px;margin-bottom:5px;color:#486173}
+input,select,textarea{width:100%;padding:11px 12px;border:2px solid #d5e0e1;border-radius:12px;background:#fff;outline:none}
+input:focus,select:focus,textarea:focus{border-color:#75b7c8}
+.rubric{overflow:auto}
+table{width:100%;border-collapse:collapse;min-width:760px}
+th,td{border:1px solid #cfd9dc;padding:11px;vertical-align:top}
+th{background:#e7f4f7;color:#173b61;font-weight:900}
+td.scorecell{width:110px;text-align:center}
+.scorebox{width:78px!important;text-align:center;font-weight:900;font-size:18px}
+.dim{font-weight:900;color:#173b61}
+.indicator{font-size:14px;line-height:1.45}
+.full{font-weight:900;text-align:center;color:#6d5c2b}
+.section-title{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#173b61;color:#fff;
+padding:11px 15px;border-radius:15px;margin:18px 0 10px}
+.section-title span:last-child{background:#f0b84f;color:#173b61;padding:5px 10px;border-radius:999px;font-weight:900}
+.totalbar{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:650px){.totalbar{grid-template-columns:1fr}}
+.total{padding:16px;border-radius:18px;background:#eef7f9;border:2px solid #cfe3e7;text-align:center}
+.total .num{font-size:34px;font-weight:1000;color:#173b61}
+.total small{display:block;font-weight:900;color:#637783}
+.band{display:grid;grid-template-columns:1fr 2fr;gap:0;border:2px solid #d9d9c8;border-radius:14px;overflow:hidden}
+.band div{padding:11px;border-bottom:1px solid #ddd}
+.band div:nth-last-child(-n+2){border-bottom:0}
+.band .head{background:#edf2dc;font-weight:900}
+button.primary{background:#173b61;color:#fff;border:0;border-radius:999px;padding:12px 19px;font-weight:900}
+button.gold{background:#f0b84f;color:#173b61;border:0;border-radius:999px;padding:12px 19px;font-weight:900}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:15px}
+.note{font-size:13px;color:#6d7d89}
+.feedback{min-height:90px;background:#fff8df;border:2px dashed #e0b45a;border-radius:16px;padding:14px}
+.rating{display:flex;gap:4px;justify-content:center;font-size:30px;cursor:pointer}
+.star{opacity:.3}.star.on{opacity:1}
+.checks{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+@media(max-width:650px){.checks{grid-template-columns:1fr}}
+.check{background:#f7fbf7;border:2px solid #dce8dd;border-radius:14px;padding:12px;font-weight:800}
+.check input{width:auto;margin-right:8px}
+.smallcaps{font-size:12px;font-weight:900;letter-spacing:.6px;color:#66808e}
+footer{padding:18px;text-align:center;background:#173b61;color:#e9f7fb;font-size:12px}
+@media print{
+ body{background:#fff}.shell{padding:0}.frame{border:0;box-shadow:none}.nav,.actions,footer{display:none!important}
+ .page{display:block!important;padding:10px}.top{padding:18px}.card{box-shadow:none;break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<div class="shell"><div class="frame">
+
+<header class="top">
+<div class="title-wrap">
+<div class="title">🗺️ Borang Pentaksiran Formatif</div>
+<div class="subtitle">PEMERHATIAN GURU • MISI PENJELAJAH KOORDINAT • MATEMATIK TAHUN 4</div>
+<div class="badges">
+<span class="badge">📍 7.1 Koordinat pada sukuan pertama</span>
+<span class="badge">🎯 Aktiviti 3 • Penakulan & Perancangan</span>
+<span class="badge">🗣️ Penutup • Pembentangan</span>
+</div>
+</div>
+</header>
+
+<nav class="nav">
+<button class="active" onclick="showPage('borang')">📋 Borang</button>
+<button onclick="showPage('rubrik')">📊 Rubrik</button>
+<button onclick="showPage('rumusan')">🏆 Rumusan</button>
+</nav>
+
+<section id="borang" class="page active">
+<div class="intro">
+<div class="card">
+<div class="smallcaps">PANDUAN PENTAKSIRAN</div>
+<h2>👀 Pemerhatian Guru</h2>
+<p>Gunakan borang ini semasa murid menjalankan aktiviti <b>“Misi Penjelajah Koordinat”</b>. Pentaksiran memberi tumpuan kepada pemikiran kritis, kolaborasi, kreativiti, ketepatan data, pencapaian TP6 dan komunikasi.</p>
+<div class="parchment">
+<h3>🎒 Aktiviti yang diperhatikan</h3>
+<ul>
+<li>Murid bekerjasama menyelesaikan <b>4 checkpoint</b>.</li>
+<li>Menentukan koordinat <b>(x,y)</b>.</li>
+<li>Menyatakan jarak mengufuk dan mencancang dari asalan <b>(0,0)</b>.</li>
+<li>Membentangkan hasil kerja secara lisan.</li>
+</ul>
+</div>
+</div>
+<div class="card">
+<div class="smallcaps">BUTIRAN</div>
+<h2>📝 Maklumat Kumpulan</h2>
+<div class="field"><label>Nama Kumpulan</label><input id="group" placeholder="Contoh: The Coordinate Crew"></div><br>
+<div class="field"><label>Tarikh</label><input id="date" type="date"></div><br>
+<div class="field"><label>Nama Guru</label><input id="teacher" placeholder="Nama pemerhati"></div>
+</div>
+</div>
+
+<div class="card">
+<div class="section-title"><span>1. PENILAIAN KRITIS & KOLABORASI</span><span>20 MARKAH</span></div>
+<div class="rubric"><table>
+<tr><th>Dimensi (6C)</th><th>Indikator Pemerhatian</th><th>Markah Penuh</th><th>Markah Diperoleh</th></tr>
+<tr><td class="dim">C5: Pemikiran Kritis</td><td class="indicator">Murid menganalisis data Carta Pai (sektor terbesar/si kecil) untuk mengenal pasti masalah utama.</td><td class="full">5</td><td class="scorecell"><input class="scorebox" data-max="5" type="number" min="0" max="5" value="0"></td></tr>
+<tr><td class="dim">C5: Pemikiran Kritis</td><td class="indicator">Murid membuat rumusan/justifikasi saintifik yang logik untuk setiap cadangan 5R.</td><td class="full">5</td><td class="scorecell"><input class="scorebox" data-max="5" type="number" min="0" max="5" value="0"></td></tr>
+<tr><td class="dim">C3: Kolaborasi</td><td class="indicator">Semua ahli kumpulan menyumbang idea semasa sesi Sumbangsaran (Perancangan Program Lestari).</td><td class="full">5</td><td class="scorecell"><input class="scorebox" data-max="5" type="number" min="0" max="5" value="0"></td></tr>
+<tr><td class="dim">C6: Kreativiti</td><td class="indicator">Kumpulan menunjukkan idea baharu/menarik dalam nama program dan slogan.</td><td class="full">5</td><td class="scorecell"><input class="scorebox" data-max="5" type="number" min="0" max="5" value="0"></td></tr>
+<tr><td colspan="2"><b>Jumlah Markah Bahagian 1</b></td><td class="full">20</td><td class="scorecell"><b id="s1">0</b></td></tr>
+</table></div>
+</div>
+
+<div class="card">
+<div class="section-title"><span>2. PENILAIAN PRODUK & KOMUNIKASI</span><span>30 MARKAH</span></div>
+<div class="rubric"><table>
+<tr><th>Dimensi</th><th>Indikator Pemerhatian</th><th>Markah Penuh</th><th>Markah Diperoleh</th></tr>
+<tr><td class="dim">Ketepatan Data (Matematik/Sains)</td><td class="indicator">Carta Pai yang dilukis mempunyai lakaran sudut yang tepat dan diwarnakan mengikut klasifikasi (Merah/Hijau).</td><td class="full">10</td><td class="scorecell"><input class="scorebox" data-max="10" type="number" min="0" max="10" value="0"></td></tr>
+<tr><td class="dim">Pencapaian TP6 (Sains)</td><td class="indicator">Justifikasi saintifik Program Lestari adalah terancang dan berhemah, dan secara langsung menangani sektor sisa terbesar.</td><td class="full">10</td><td class="scorecell"><input class="scorebox" data-max="10" type="number" min="0" max="10" value="0"></td></tr>
+<tr><td class="dim">C4: Komunikasi</td><td class="indicator">Kumpulan yang dipilih (melalui Simulasi Spin Wheel) membentangkan hasil kerja dengan jelas, yakin, dan dalam masa yang ditetapkan.</td><td class="full">10</td><td class="scorecell"><input class="scorebox" data-max="10" type="number" min="0" max="10" value="0"></td></tr>
+<tr><td colspan="2"><b>Jumlah Markah Bahagian 2</b></td><td class="full">30</td><td class="scorecell"><b id="s2">0</b></td></tr>
+</table></div>
+</div>
+
+<div class="card">
+<div class="section-title"><span>⭐ CATATAN PEMERHATIAN</span><span>GURU</span></div>
+<textarea id="notes" rows="5" placeholder="Catat kekuatan, evidens pemerhatian, atau perkara yang perlu ditambah baik..."></textarea>
+<div class="actions">
+<button class="primary" onclick="saveForm()">💾 Simpan pada peranti</button>
+<button class="gold" onclick="window.print()">🖨️ Cetak / PDF</button>
+</div>
+<p class="note">Data simpanan hanya berada pada peranti/pelayar ini. Cetak atau simpan PDF untuk rekod rasmi.</p>
+</div>
+</section>
+
+<section id="rubrik" class="page">
+<div class="card">
+<div class="smallcaps">PANDUAN PEMARKAHAN</div>
+<h2>📊 Rubrik Pentaksiran</h2>
+<p>Masukkan markah mengikut evidens yang diperhatikan. Markah maksimum keseluruhan ialah <b>50</b>.</p>
+<div class="totalbar">
+<div class="total"><div class="num" id="r1">0/20</div><small>Bahagian 1</small></div>
+<div class="total"><div class="num" id="r2">0/30</div><small>Bahagian 2</small></div>
+<div class="total"><div class="num" id="rt">0/50</div><small>Jumlah Keseluruhan</small></div>
+</div>
+</div>
+<div class="card">
+<h2>🎯 Cadangan Tindakan Susulan</h2>
+<div class="band">
+<div class="head">Markah Diperoleh</div><div class="head">Tindakan Guru</div>
+<div>Kurang 25</div><div><b>Pemulihan:</b> Beri Tugasan Padankan & Warnakan Sisa (mengukuhkan klasifikasi dan perwakilan pecahan).</div>
+<div>25–40</div><div><b>Pengukuhan:</b> Beri Tugasan Analisis Data Sisa Kantin Baru (melatih pengiraan sudut dan tafsiran data).</div>
+<div>41–50</div><div><b>Pengayaan:</b> Beri Tugasan Reka Poster Kempen Data (mencapai penakulan TP6 dan komunikasi lanjutan).</div>
+</div>
+</div>
+<div class="card">
+<h2>🧭 Nota Guru</h2>
+<div class="parchment">Gunakan evidens semasa proses perbincangan, penghasilan produk dan pembentangan. Catatan guru boleh membantu menentukan tindakan susulan yang bersesuaian.</div>
+</div>
+</section>
+
+<section id="rumusan" class="page">
+<div class="card" style="text-align:center">
+<div class="smallcaps">RUMUSAN PENTAKSIRAN</div>
+<h2>🏆 Peta Pencapaian Kumpulan</h2>
+<div class="totalbar">
+<div class="total"><div class="num" id="sum1">0</div><small>/ 20 • Kritis, Kolaborasi & Kreativiti</small></div>
+<div class="total"><div class="num" id="sum2">0</div><small>/ 30 • Produk & Komunikasi</small></div>
+<div class="total"><div class="num" id="sumt">0</div><small>/ 50 • Jumlah</small></div>
+</div>
+<br>
+<div class="feedback" id="action">Masukkan markah pada tab <b>Borang</b> untuk melihat rumusan tindakan susulan.</div>
+</div>
+<div class="card">
+<h2>📝 Ringkasan Guru</h2>
+<div class="field"><label>Kekuatan utama kumpulan</label><textarea rows="3" placeholder="Contoh: Semua ahli aktif berkongsi idea..."></textarea></div><br>
+<div class="field"><label>Cadangan penambahbaikan</label><textarea rows="3" placeholder="Contoh: Perlu meningkatkan ketepatan..."></textarea></div>
+</div>
+</section>
+
+<footer>🗺️ Misi Penjelajah Koordinat • Pentaksiran Formatif Guru • Matematik Tahun 4</footer>
+</div></div>
+
+<script>
+const pages=['borang','rubrik','rumusan'];
+function showPage(id){
+ pages.forEach(p=>document.getElementById(p).classList.toggle('active',p===id));
+ document.querySelectorAll('.nav button').forEach((b,i)=>b.classList.toggle('active',pages[i]===id));
+ updateTotals();
+ window.scrollTo({top:0,behavior:'smooth'});
+}
+document.querySelectorAll('.scorebox').forEach(x=>x.addEventListener('input',updateTotals));
+function val(el){let n=parseInt(el.value||0);let m=parseInt(el.dataset.max);if(n<0)n=0;if(n>m)n=m;el.value=n;return n}
+function updateTotals(){
+ const boxes=[...document.querySelectorAll('.scorebox')];
+ const s1=boxes.slice(0,4).reduce((a,b)=>a+val(b),0);
+ const s2=boxes.slice(4).reduce((a,b)=>a+val(b),0);
+ const total=s1+s2;
+ ['s1','r1','sum1'].forEach(id=>document.getElementById(id).textContent=id==='s1'?s1:(id==='r1'?s1+'/20':s1));
+ ['s2','r2','sum2'].forEach(id=>document.getElementById(id).textContent=id==='s2'?s2:(id==='r2'?s2+'/30':s2));
+ document.getElementById('rt').textContent=total+'/50';
+ document.getElementById('sumt').textContent=total;
+ let msg='Masukkan markah untuk melihat cadangan.';
+ if(total<25)msg='🔵 <b>Pemulihan:</b> Beri tugasan Padankan & Warnakan Sisa untuk mengukuhkan klasifikasi dan perwakilan pecahan.';
+ else if(total<=40)msg='🟢 <b>Pengukuhan:</b> Beri tugasan Analisis Data Sisa Kantin Baru untuk melatih pengiraan sudut dan tafsiran data.';
+ else msg='🟡 <b>Pengayaan:</b> Beri tugasan Reka Poster Kempen Data untuk mencapai penakulan TP6 dan komunikasi lanjutan.';
+ document.getElementById('action').innerHTML=msg;
+}
+function saveForm(){
+ const data={group:document.getElementById('group').value,date:document.getElementById('date').value,teacher:document.getElementById('teacher').value,notes:document.getElementById('notes').value,scores:[...document.querySelectorAll('.scorebox')].map(x=>x.value)};
+ localStorage.setItem('koordinatPentaksiran',JSON.stringify(data));
+ alert('Borang disimpan pada peranti ini. 🌟');
+}
+function loadForm(){
+ const raw=localStorage.getItem('koordinatPentaksiran');if(!raw)return;
+ const d=JSON.parse(raw);
+ ['group','date','teacher','notes'].forEach(k=>{if(d[k]!=null)document.getElementById(k).value=d[k]});
+ [...document.querySelectorAll('.scorebox')].forEach((x,i)=>{if(d.scores?.[i]!=null)x.value=d.scores[i]});
+}
+loadForm();updateTotals();
+</script>
+</body>
+</html>
